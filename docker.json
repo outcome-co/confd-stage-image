@@ -1,0 +1,10 @@
+{
+    "app": {
+        "name": "confd-stage",
+        "version": "0.1.0"
+    },
+    "docker": {
+        "registry": "docker.io",
+        "repository": "outcomeco"
+    }
+}
