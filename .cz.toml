@@ -1,6 +1,6 @@
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.2.2"
+version = "0.2.3"
 tag_format = "v$version"
 bump_message = "chore(version): $current_version → $new_version"
 version_files = ["config.cfg:APP_VERSION"]
