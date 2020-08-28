@@ -1,5 +1,5 @@
 # confd-stage
-![Release](https://github.com/outcome-co/confd-stage-image/workflows/Release/badge.svg?branch=v0.2.2) ![version-badge](https://img.shields.io/badge/version-0.2.2-brightgreen)
+![Release](https://github.com/outcome-co/confd-stage-image/workflows/Release/badge.svg?branch=v0.2.3) ![version-badge](https://img.shields.io/badge/version-0.2.3-brightgreen)
 
 A small utility image that contains `confd`, typically to be used as part of a multi-stage build.
 
