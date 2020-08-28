@@ -21,7 +21,7 @@ jobs:
             ref: ${{ github.event.pull_request.head.ref }}
 
         - name: Lint commit messages
-          uses: wagoid/commitlint-github-action@v1
+          uses: wagoid/commitlint-github-action@v2.0.2
           with:
             failOnWarnings: true
 
