@@ -42,8 +42,6 @@ jobs:
           env:
             GOOGLE_APPLICATION_CREDENTIALS_ENCODED: ${{ secrets.GCP_REGISTRY_KEY }}
             GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/secrets/default_application_credentials.json
-            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-            DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
 
     auto_merge_dependabot:
         name: Auto-approve dependabot pull requests
