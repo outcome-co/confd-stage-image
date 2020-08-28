@@ -18,6 +18,7 @@ jobs:
           with:
             token: ${{ secrets.OTTO_TOKEN }}
             fetch-depth: 0
+            ref: master
 
         - name: Configure Otto
           run: |
@@ -26,7 +27,7 @@ jobs:
 
         - name: Bump version
           id: bump_version
-          uses: 'outcome-co/action-update-version@master'
+          uses: outcome-co/action-update-version@v0.8.1
 
         - name: Push new version
           if: ${{ steps.bump_version.outputs.updated == 'true' }}
