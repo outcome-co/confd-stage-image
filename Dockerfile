@@ -1,9 +1,9 @@
-FROM golang:1.9 as confd
+FROM golang:1.15.0 as confd
 
 ARG APP_VERSION
 ARG CONFD_VERSION=0.16.0
 
-RUN apt-get update && apt-get install --no-install-recommends -y "bzip2=1.0.6-8.1" #!COMMIT
+RUN apt-get update && apt-get install --no-install-recommends -y "bzip2=1.0.6-9.2~deb10u1" #!COMMIT
 
 RUN wget -q https://github.com/kelseyhightower/confd/archive/v${CONFD_VERSION}.tar.gz -O /tmp/v${CONFD_VERSION}.tar.gz
 
