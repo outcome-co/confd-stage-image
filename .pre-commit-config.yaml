@@ -14,3 +14,10 @@ repos:
         args: [--branch, master]  
       - id: check-merge-conflict
         stages: [commit]
+
+  # Lint Docker
+  - repo: https://git.iamthefij.com/iamthefij/docker-pre-commit
+    rev: v2.0.0
+    hooks:
+      - id: hadolint
+        stages: [push]

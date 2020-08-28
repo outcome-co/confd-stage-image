@@ -1,12 +1,49 @@
 ifndef MK_VARS_DOCKER
 MK_VARS_DOCKER=1
 
+include make/env.Makefile
+include make/vars.app.Makefile
+include make/vars.docker.*Makefile
 
-APP_NAME ?= $(shell node -p -e 'require("./docker.json").app.name')
-APP_VERSION ?= $(shell node -p -e 'require("./docker.json").app.version')
+DOCKER_BUILDER_REGISTRY ?= eu.gcr.io
+DOCKER_BUILDER_REPOSITORY ?= otc-registry-prod
+DOCKER_BUILDER_IMAGE ?= makisu-builder:latest
 
-DOCKER_REGISTRY = $(shell node -p -e 'require("./docker.json").docker.registry')
-DOCKER_REPOSITORY = $(shell node -p -e 'require("./docker.json").docker.repository')
+ifeq ($(MAKISU_SELF_BUILD),1)
+MAKISU_IMAGE = $(DOCKER_IMAGE_NAME_VERSION)
+else
+MAKISU_IMAGE = $(DOCKER_BUILDER_REGISTRY)/$(DOCKER_BUILDER_REPOSITORY)/$(DOCKER_BUILDER_IMAGE)
+endif
 
+DOCKER_TAG_BASE = $(warning DOCKER_TAG_BASE)$(DOCKER_REGISTRY)/$(DOCKER_REPOSITORY)/$(APP_NAME)
 
-endif 
+ifeq ($(IN_GIT_MAIN),1)
+DOCKER_TAG_LATEST = latest
+DOCKER_TAG_VERSION = $(APP_VERSION)
+else
+DOCKER_TAG_LATEST = latest-$(GIT_BRANCH_NORMAL)
+DOCKER_TAG_VERSION = $(APP_VERSION)-$(GIT_BRANCH_NORMAL)
+endif
+
+DOCKER_IMAGE_NAME_VERSION = $(APP_NAME):$(DOCKER_TAG_VERSION)
+DOCKER_IMAGE_NAME_LATEST = $(APP_NAME):$(DOCKER_TAG_LATEST)
+
+DOCKER_APP_BUILD_ARGS = APP_VERSION=$(DOCKER_TAG_VERSION) \
+						APP_NAME=$(APP_NAME)
+
+ifndef DOCKER_BUILD_ARGS
+DOCKER_BUILD_ARGS = $(DOCKER_APP_BUILD_ARGS)
+else
+DOCKER_BUILD_ARGS += $(DOCKER_APP_BUILD_ARGS) + $(DOCKER_POETRY_BUILD_ARGS)
+endif
+
+ifdef APP_PORT
+DOCKER_APP_BUILD_ARGS += APP_PORT=$(APP_PORT)
+DOCKER_PORT_OPTIONS = -p $(APP_PORT):$(APP_PORT)
+else
+DOCKER_PORT_OPTIONS =
+endif
+
+DOCKER_BUILD_ARGS_OPTIONS = --build-arg $(subst $(space), --build-arg ,$(DOCKER_BUILD_ARGS))
+
+endif
