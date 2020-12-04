@@ -1,4 +1,4 @@
-FROM golang:1.15.5 as confd
+FROM golang:1.15.6 as confd
 
 ARG APP_VERSION
 ARG CONFD_VERSION=0.16.0
